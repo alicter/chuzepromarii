@@ -1,0 +1,170 @@
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+
+body {
+  background-image: url("./bgImgUp.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  margin: 0;
+}
+.userPost {
+  background-color: rgba(0, 31, 50, 0.306);
+  width: fit-content;
+  padding: 15px;
+  border: none;
+  margin: auto;
+  margin-top: 50px;
+  color: goldenrod;
+  box-shadow: 0px 5px 25px black;
+}
+.userPost iframe {
+  box-shadow: 0px 5px 25px black;
+}
+.theLayout {
+  margin: auto;
+  background-color: transparent;
+  text-align: center;
+  padding: 5%;
+}
+.theLayout fieldset {
+  margin: auto;
+  width: min-content;
+}
+.thePosts {
+  background-color: rgba(0, 31, 50, 0.5);
+  margin: auto;
+  margin-top: 50px;
+  padding: 15px;
+  width: fit-content;
+  height: 400px;
+  overflow-y: scroll;
+  scrollbar-color: gold goldenrod;
+  box-shadow: 1px 5px 10px black;
+}
+.thePostsHeadline {
+  background-color: rgba(0, 31, 50, 0.5);
+  color: gold;
+  box-shadow: 1px 5px 10px black;
+}
+.theInputs {
+  background-color: rgba(0, 31, 50, 0.5);
+  width: fit-content;
+  padding: 15px;
+  border: goldenrod 1px solid;
+  border-top: none;
+  margin: auto;
+  margin-top: 50px;
+  box-shadow: 1px 5px 10px black;
+  margin-bottom: 50px;
+}
+.theInputs h5 {
+  margin-top: -40px;
+  margin-left: -16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: calc(100% + 24px);
+  background-color: rgba(0, 31, 50, 0.671);
+  border: 4px solid goldenrod;
+  box-shadow: 0px 5px 15px black;
+  color: goldenrod;
+}
+.theInputs fieldset legend {
+  color: goldenrod;
+}
+.theInputs fieldset {
+  margin-top: 10px;
+  border: 1px solid black;
+  background-color: transparent;
+  box-shadow: 1px 5px 10px black;
+}
+.theInputs button {
+  background-color: rgba(0, 31, 50, 0.5);
+  border: 1px solid goldenrod;
+  color: gold;
+  box-shadow: 1px 5px 10px black;
+  padding: 10px;
+  margin-top: 20px;
+}
+.theInputs button:hover {
+  background-color: rgba(0, 60, 98, 0.55);
+  box-shadow: 1px 5px 10px rgba(0, 60, 98, 0.55);
+  transition: all 0.3s;
+}
+.pNapovedaHid {
+  height: 0px;
+  overflow: hidden;
+  transition: all 1s;
+}
+.pNapovedaVis {
+  overflow: auto;
+  height: 100px;
+  transition: all 1s;
+}
+.theInputs legend button {
+  padding: 5px;
+  margin: 5px;
+}
+.theFooter {
+  background-color: rgba(0, 31, 50, 0.5);
+  width: fit-content;
+  padding: 15px;
+  border: goldenrod 1px solid;
+  margin: auto;
+  margin-top: 50px;
+  box-shadow: 1px 5px 10px black;
+  color: goldenrod;
+}
+.theFooter fieldset legend {
+  color: white;
+}
+.theFooter fieldset {
+  width: 150px;
+  margin-top: 10px;
+  border: 1px solid black;
+  background-color: transparent;
+  box-shadow: 1px 5px 10px black;
+}
+.theFooter h5 {
+  margin-top: -40px;
+  margin-left: -16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: calc(100% + 24px);
+  background-color: rgba(0, 31, 50, 0.671);
+  border: 4px solid goldenrod;
+  box-shadow: 0px 5px 15px black;
+  color: goldenrod;
+}
+.theLayout {
+  margin: auto;
+  background-color: transparent;
+  text-align: center;
+  padding: 5%;
+}
+.theLayout fieldset {
+  margin: auto;
+  width: min-content;
+}
+.thePosts {
+  background-color: rgba(0, 31, 50, 0.5);
+  margin: auto;
+  margin-top: 50px;
+  padding: 15px;
+  width: fit-content;
+  height: 400px;
+  overflow-y: scroll;
+  scrollbar-color: gold goldenrod;
+  box-shadow: 1px 5px 10px black;
+}
+.thePostsHeadline {
+  background-color: rgba(0, 31, 50, 0.5);
+  color: gold;
+  box-shadow: 1px 5px 10px black;
+}

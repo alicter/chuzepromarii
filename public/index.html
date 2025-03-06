@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="index.css" rel="stylesheet" />
+    <title>S Marií k Ježíši</title>
+  </head>
+  <body>
+    <div class="theLayout">
+      <h1>Ježíši!</h1>
+      <div class="theInputs">
+        <h5>VSTUP</h5>
+        <fieldset>
+          <legend>Jméno (nebo nick)</legend>
+          <input type="text" id="nick" />
+        </fieldset>
+        <fieldset>
+          <legend>Úmysl</legend>
+          <p>Všechny zde zapsané náleží Ježíši Kristu skrze Neposkvrněnou.</p>
+          <input type="text" id="umysl" />
+        </fieldset>
+        <fieldset>
+          <legend>Odkaz na mapu</legend>
+          <p>
+            Vložte iframe odkaz z mapy.cz, který naleznete ve sdílení mapy.
+            Nástroje → Sdílet → Vložit mapu do vlastních stránek → Kopírovat kód
+          </p>
+          <input type="text" id="src" />
+        </fieldset>
+        <button onclick="()=> {socket.emit('chat message', {})}">VLOŽIT</button>
+      </div>
+      <main>
+        <fieldset class="thePostsHeadline">
+          <legend>VÝSTUPY</legend>
+          <div class="thePosts" id="thePosts"></div>
+        </fieldset>
+      </main>
+      <footer>
+        <div class="theFooter">
+          <h5>KONTAKT</h5>
+          <fieldset>
+            <legend>Autor</legend>
+            <address>Jakub Kunc</address>
+          </fieldset>
+          <fieldset>
+            <legend>E-mail:</legend>
+            <address>jjt.kunc@gmail.com</address>
+          </fieldset>
+        </div>
+      </footer>
+    </div>
+  </body>
+  <script src="socket.io.js"></script>
+  <script>
+    const socket = io();
+    socket.emit("vse", "");
+    socket.on("vse", async (book) => {
+      console.log(book);
+      await book.map((i) => {
+        document.getElementById("thePosts").innerHTML +=
+          "<h5> " +
+          i.Nick +
+          "</h5> <p>" +
+          i.Umysl +
+          " </p>" +
+          "<iframe src='" +
+          i.Src +
+          "' width= '250px' height= '250px' />";
+      });
+    });
+  </script>
+</html>
