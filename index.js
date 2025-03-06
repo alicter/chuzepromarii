@@ -1,4 +1,5 @@
 const express = require("express");
+const PORT = process.env.PORT || 3000;
 const { createServer } = require("node:http");
 const { join } = require("node:path");
 const { Server } = require("socket.io");
@@ -41,8 +42,8 @@ async function main() {
       }
     });
   });
-  server.listen(5003, () => {
-    console.log("server running at http://localhost:5003");
+  server.listen(PORT, () => {
+    console.log("server running at port" + PORT);
   });
 }
 
