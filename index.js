@@ -7,12 +7,7 @@ const { open } = require("sqlite");
 const { mainModule } = require("node:process");
 const app = express();
 const server = createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3001",
-    credentials: true,
-  },
-});
+const io = new Server(server, {});
 const db = new sqlite3.Database("db.db");
 let sql = `SELECT * FROM marii`;
 const fs = require("fs");
@@ -46,7 +41,7 @@ async function main() {
       }
     });
   });
-  server.listen(5003, () => {
+  server.listen(8080, () => {
     console.log("server running at http://localhost:5003");
   });
 }
