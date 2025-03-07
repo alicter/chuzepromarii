@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="theLayout">
-      <h1>Ježíši!</h1>
+      <h1>OBĚTUJ CHUZI PRO JEŽÍŠE SKRZE MARII</h1>
       <div class="theInputs">
         <h5>VSTUP</h5>
         <fieldset>
@@ -21,14 +21,33 @@
           <input type="text" id="umysl" />
         </fieldset>
         <fieldset>
-          <legend>Odkaz na mapu</legend>
+          <legend>Vložit sledování trasy</legend>
           <p>
-            Vložte iframe odkaz z mapy.cz, který naleznete ve sdílení mapy.
-            Nástroje → Sdílet → Vložit mapu do vlastních stránek → Kopírovat kód
+            Pokud chcete spustit záznam trasy, klikněte:
+            <button onclick="startTracking()">Spustit</button>
+          </p>
+          <p>
+            Zastavení záznamu trasy:
+            <button onclick="stopTracking()">Ukončit</button>
+          </p>
+        </fieldset>
+      
+        <fieldset>
+          <legend>Odkaz na mapu</legend>
+          <p>Odkaz ke vložení
           </p>
           <input type="text" id="src" />
         </fieldset>
-        <button onclick="()=> {socket.emit('chat message', {})}">VLOŽIT</button>
+        <button onclick="socket.emit('in', {
+           nick : document.getElementById('nick').value,
+           umysl : document.getElementById('umysl').value,
+           src : document.getElementById('src').value
+        })">VLOŽIT</button>
+      </div>
+      <div class="theInputs"> 
+        <fieldset id="note">
+         <legend>POZNÁMKA</legend>
+        </fieldset>
       </div>
       <main>
         <fieldset class="thePostsHeadline">
@@ -53,10 +72,74 @@
   </body>
   <script src="socket.io.js"></script>
   <script>
+    function note(p){
+
+      document.getElementById('note').innerHTML = "<legend>POZNÁMKA</legend> <br><p>" + p + "</p>";
+
+    }
+      let watchId = null;
+let locations = [];
+
+// Spustí sledování polohy
+function startTracking() {
+  console.log("Začalo sledování");
+    if (navigator.geolocation) {
+        watchId = navigator.geolocation.watchPosition(position => {
+            const { latitude, longitude } = position.coords;
+            locations.push({ lat: latitude, lon: longitude });
+            note(`Zaznamenána poloha: ${latitude}, ${longitude}`);
+            console.log(`Zaznamenána poloha: ${latitude}, ${longitude}`);
+        }, error => {
+          note("Chyba při získávání polohy");
+            console.error("Chyba při získávání polohy", error);
+        });
+    } else {
+      note("Geolokace není podporována tímto prohlížečem.");
+        console.error("Geolokace není podporována tímto prohlížečem.");
+    }
+}
+
+// Zastaví sledování polohy
+function stopTracking() {
+  console.log("Skončilo sledování");
+    if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+        note("Sledování zastaveno");
+        console.log("Sledování zastaveno");
+    }
+    generateMapLink();
+}
+
+// Vytvoří odkaz na Mapy.cz
+function generateMapLink() {
+    if (locations.length === 0) {
+      note("Nebyla zaznamenána žádná poloha.");
+        console.warn("Nebyla zaznamenána žádná poloha.");
+        return;
+    }
+    
+    let mapyLink = "https://mapy.cz/";
+
+    if (locations.length === 1) {
+        // Pokud je pouze jedna poloha, otevře se mapa s tímto bodem
+        mapyLink += `zakladni?x=${locations[0].lon}&y=${locations[0].lat}&z=15`;
+    } else {
+        // Pokud je více bodů, vytvoří trasu
+        const routePoints = locations.map(loc => `${loc.lon},${loc.lat}`).join("|");
+        mapyLink += `zakladni?planovani-trasy&rc=9&rt=${routePoints}`;
+    }
+    note("Odkaz na Mapy.cz: ", mapyLink);
+    console.log("Odkaz na Mapy.cz: ", mapyLink);
+    document.getElementById("src").value = mapyLink;
+    //window.open(mapyLink, "_blank"); // Otevře mapu v novém okně
+}
+
     const socket = io();
     socket.emit("vse", "");
     socket.on("vse", async (book) => {
       console.log(book);
+      document.getElementById("thePosts").innerHTML = "";
       await book.map((i) => {
         document.getElementById("thePosts").innerHTML +=
           "<h5> " +
@@ -66,7 +149,7 @@
           " </p>" +
           "<iframe src='" +
           i.Src +
-          "' width= '250px' height= '250px' />";
+          "' width= '275px' height= '275px' />";
       });
     });
   </script>
