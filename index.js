@@ -34,11 +34,34 @@ async function main() {
   io.on("connection", (socket) => {
     socket.on("vse", async (msg) => {
       try {
+        console.log("Požadavek na získání dat");
         sql = `SELECT * FROM marii`;
         const book = await fetchAll(db, sql);
         io.emit("vse", await book);
       } catch (err) {
         console.log(err);
+      }
+    });
+    socket.on("in", async (msg) => {
+      try {
+        if (msg.src.includes("<") || !msg.src.includes("mapy.cz")) {
+          console.log("neplatný vstup");
+          return;
+        }
+        msg.src.replaceAll(" ", "");
+        console.log("Požadavek na vložení dat");
+
+        sql = `INSERT INTO marii(Nick, Umysl, Src) VALUES (? , ? , ?)`;
+        db.run(sql, [msg.nick, msg.umysl, msg.src], (err) => {
+          console.log(err);
+        });
+      } catch (err) {
+        console.log(err);
+      } finally {
+        sql = `SELECT * FROM marii`;
+        const book = await fetchAll(db, sql);
+        io.emit("vse", await book);
+        //db.close();
       }
     });
   });
