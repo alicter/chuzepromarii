@@ -44,7 +44,7 @@ async function main() {
     });
     socket.on("in", async (msg) => {
       try {
-        if (msg.src.includes("<") || !msg.src.includes("mapy.cz")) {
+        if (msg.src.includes("<") || !msg.src.includes("openstreetmap.org")) {
           console.log("neplatný vstup");
           return;
         }
@@ -52,6 +52,7 @@ async function main() {
         console.log("Požadavek na vložení dat");
 
         sql = `INSERT INTO marii(Nick, Umysl, Src) VALUES (? , ? , ?)`;
+
         db.run(sql, [msg.nick, msg.umysl, msg.src], (err) => {
           console.log(err);
         });
@@ -60,6 +61,7 @@ async function main() {
       } finally {
         sql = `SELECT * FROM marii`;
         const book = await fetchAll(db, sql);
+
         io.emit("vse", await book);
         //db.close();
       }
